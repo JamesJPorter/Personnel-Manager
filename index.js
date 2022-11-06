@@ -2,6 +2,12 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 
+const myPromise = new Promise((res, rej) => {
+    setTimeout(() => {
+        resolve()
+    })
+})
+
 
 // Connect to database
 const db = mysql.createConnection(
@@ -37,7 +43,7 @@ const db = mysql.createConnection(
         const userAction = data.Menu;
         console.log('userAction', userAction)
         if (userAction === 'View All Employees'){
-            console.log(data)
+            console.log('View All Employees selected')
             viewAllEmployees()
         } else if (userAction === 'Add Employee') {
             console.log('Add Employee selected')
@@ -47,6 +53,7 @@ const db = mysql.createConnection(
             console.log('View All Roles selected')
         } else if (userAction === 'View All Departments'){
             console.log('View All Departments selected')
+            viewAllDepartments();
         } else if (userAction === 'Add Department'){
             console.log('Add Department selected')
         } else {
@@ -55,19 +62,23 @@ const db = mysql.createConnection(
     })
   }
 
-  function viewAllEmployees(){
-    db.query('SELECT * FROM employee', function(err, results){
-        console.log(results)
-        const employeeString = JSON.stringify(results)
-        cTable.getTable(results)
-    })
-  }
+  let viewAllEmployees = new Promise((res, rej) => {
+    res(db.query('SELECT * FROM employee', function(err, results){
+        console.log(cTable.getTable(results))
+    }));
+    rej(console.log(err));
+  })
+
+  viewAllEmployees.then(
+    mainMenu()
+  )
 
   function viewAllDepartments(){
     db.query('SELECT * FROM department', function(err, results){
-        console.log(results)
-        
+        if (err) throw err;
+        console.log(cTable.getTable(results))
     })
+    mainMenu();
   }
 
   function init(){
