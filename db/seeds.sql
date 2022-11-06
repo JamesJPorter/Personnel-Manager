@@ -14,7 +14,8 @@ VALUES  ("Director of Operations", 120000.00, 1),
        ("Rental Manager", 80000.00, 4),
        ("Marketing Manager", 80000.00, 5),
        ("Lead Developer", 100000.00, 6),
-       ("Lead Custodian", 50000.00, 7);
+       ("Lead Custodian", 50000.00, 7), 
+       ("Usher", 30000.00, 3);
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
