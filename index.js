@@ -61,7 +61,7 @@ const db = mysql.createConnection(
   };
 
   function viewAllEmployees(){
-    db.query('SELECT * FROM employee', function(err, results){
+    db.query('SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id', function(err, results){
         if (err) throw err;
         console.log(cTable.getTable(results))
         mainMenu();
@@ -129,61 +129,74 @@ const db = mysql.createConnection(
     })
 }
 
-function getEmployeeListPromise () {
-    return new Promise((resolve, reject) => {
-    let employees = db.query("SELECT * FROM employee", function(err, results){
-        if (err) throw err; 
-        console.log('Success!', results)
-        return results;
-    })
-    if (employees) {
-        resolve(conosle.log(employees))
-    } else {
-        reject('Failed')
-    }
-})}
+// function updateRole(){
+// db.promise().query
+// }
 
-getEmployeeListPromise().then((employees) => {
-    const chooseUpdate = [
-        {
-            type: 'list', 
-            name: 'choose_employee', 
-            message: 'Choose employee record to update', 
-            choices: [
-                `${employees.forEach(employee => chooseUpdate.choices.push(employee.first_name, employee.last_name, employee.id))}`
-            ]
-        }, 
-        {
-            type: 'input', 
-            name: 'first_name', 
-            message: 'Change employees first name:'
-        },
-        {
-            type: 'input', 
-            name: 'last_name', 
-            message: 'Change employees last name:'
-        },
-        {
-            type: 'input', 
-            name: 'role_id', 
-            message: 'Change employees role ID:'
-        },
-        {
-            type: 'input', 
-            name: 'manager_id', 
-            message: `Change employees manager's ID:`
-        }
+
+
+// function getEmployeeListPromise () {
+//     return new Promise((resolve, reject) => {
+//     let employees = db.query("SELECT * FROM employee", function(err, results){
+//         if (err) throw err; 
+//         console.log('Success!', results)
+//         return results;
+//     })
+//     if (employees) {
+//         resolve(conosle.log(employees))
+//     } else {
+//         reject('Failed')
+//     }
+// })}
+
+function updateEmployee(){
+    let employees = db.promise().query('SELECT * FROM employee').then(([rows]) => rows.map(row => ({name: `${row.first_name} ${row.last_name}`, value: row.id})))
+    console.log(employees)
+}
+
+updateEmployee()
+
+// getEmployeeListPromise().then((employees) => {
+//     const chooseUpdate = [
+//         {
+//             type: 'list', 
+//             name: 'choose_employee', 
+//             message: 'Choose employee record to update', 
+//             choices: [
+//                 `${employees.forEach(employee => chooseUpdate.choices.push(employee.first_name, employee.last_name, employee.id))}`
+//             ]
+//         }, 
+//         {
+//             type: 'input', 
+//             name: 'first_name', 
+//             message: 'Change employees first name:'
+//         },
+//         {
+//             type: 'input', 
+//             name: 'last_name', 
+//             message: 'Change employees last name:'
+//         },
+//         {
+//             type: 'input', 
+//             name: 'role_id', 
+//             message: 'Change employees role ID:'
+//         },
+//         {
+//             type: 'input', 
+//             name: 'manager_id', 
+//             message: `Change employees manager's ID:`
+//         }
         
-    ]
-    inquirer.prompt(chooseUpdate).then((data) => {
-        console.log(data)
-        let userSelection = data;
-        return userSelection
-    })
-    .then((userSelection) => {
-        db.query(`UPDATE employee SET first_name = "${userSelection.first_name}", last_name = "${userSelection.last_name}", role_id = "${userSelection.role_id}", manager_id = "${userSelection.manager_id}" WHERE id = ${employees.id}`)
-    }) 
-})
+//     ]
+//     inquirer.prompt(chooseUpdate).then((data) => {
+//         console.log(data)
+//         let userSelection = data;
+//         return userSelection
+//     })
+//     .then((userSelection) => {
+//         db.query(`UPDATE employee SET first_name = "${userSelection.first_name}", last_name = "${userSelection.last_name}", role_id = "${userSelection.role_id}", manager_id = "${userSelection.manager_id}" WHERE id = ${employees.id}`)
+//     }) 
+// })
 
 
   function init(){
