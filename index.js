@@ -129,6 +129,7 @@ const db = mysql.createConnection(
     })
 }
 
+
  async function updateEmployee(){
     let employees = await db.promise().query('SELECT * FROM employee').then(([rows]) => rows.map(row => ({name: `${row.first_name} ${row.last_name}`, value: row.id})))
     // console.log(employees)
