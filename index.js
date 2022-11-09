@@ -21,7 +21,7 @@ const db = mysql.createConnection(
         {
             type: 'list', 
             name: 'Menu', 
-            message: 'What would you like to do?', 
+            message: 'Welcome to Personnel Manager! What would you like to do?', 
             choices: [
                 'View All Employees', 
                 'Add Employee', 
