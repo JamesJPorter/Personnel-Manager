@@ -21,7 +21,7 @@
   ## Usage 
   To begin, enter mysql via your terminal by tpying mysql -u root -p. If you have a password assocaited with your mysql account, be sure to enter it next. Otherwise, you should find yourselve inside of the mysql shell. From here, invoke the schema.sql via the command Source db/schema.sql. This will create your database. Immediately after, invoke the seed file to create some starting data using the same format, Source db/seeds.sql. Now type Quit into the terminal to exit the mysql shell. From here, invoke the index.js file to run the application. Once inside the application, you will be presented with a bevy of options. Select them to browse and add staff as you desire.   
 
-  Video Demonstration: https://drive.google.com/file/d/1y2nbMKoNgWOEF-OC63tV7QeXP_peSncE/view 
+  Video Demonstration: https://drive.google.com/file/d/11MsOfJKFxV3NmyDFB1sh0A2M7sXfSEKx/view 
 
   ## License 
   Licensed udner the [MIT](https://opensource.org/licenses/MIT) license
